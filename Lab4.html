@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+#anim{
+    width:auto;
+    height:400px;
+    background:url("bg.png") repeat-y;
+    animation: example 10s linear infinite;
+    -webkit-animation: example 10s linear infinite; /** Chrome & Safari **/
+    -moz-animation: example 10s linear infinite; /** Firefox **/
+    -o-animation: example 10s linear infinite; /** Opera **/
+}
+
+#plane{
+   position:relative;
+   top:150px;
+   left:50%;
+   height:100px;
+   width:100px;
+   display:block;
+}
+
+#new_plane{
+   position:relative;
+   top:30%;
+   left:50%;
+   height:100px;
+   width:100px;
+   display:none;
+}
+
+
+#bird1{
+   position:absolute;
+   top:50px;
+   left:-100px;
+   height:75px;
+   width:75px;
+  }
+
+
+.obstacle1{
+
+   animation: fly 10s linear infinite;
+   animation-delay: 3s;
+
+   -webkit-animation: fly 10s linear infinite;
+   -webkit-animation-delay: 3s;
+}
+
+#bird2{
+   position:absolute;
+   top:270px;
+   left:-100px;
+   height:75px;
+   width:75px;
+}
+
+.obstacle2{
+
+   animation: fly 8s linear infinite;
+   animation-delay: 7s;
+
+   -webkit-animation: fly 8s linear infinite;
+   -webkit-animation-delay: 7s;
+}
+
+#spaceship{
+   position:absolute;
+   top:250px;
+   left:-150px;
+   height:150px;
+   width:150px;
+}
+
+.enemy{
+
+   animation: move 5s linear infinite;
+   animation-delay: 12s;
+   animation-direction:alternate;
+
+   -webkit-animation: move 5s linear infinite;
+   -webkit-animation-delay: 12s;
+   -webkit-animation-direction:alternate;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes example {
+    from {background-position: -600px,0;}
+    to {background-position: 0px,0;}
+}
+/* Standard syntax */
+@keyframes example {
+    from {background-position: -600px,0;}
+    to {background-position: 0px,0;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes fly {
+    from {left:-10%;}
+    to {left:100%;}
+}
+/* Standard syntax */
+@keyframes fly {
+    from {left:-10%;}
+    to {left:100%;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes move {
+0%{left:0%;}
+20%{left:20%; top:150px}
+40%{left:40%; top:250px}
+60%{left:65%; top:200px}
+80%{left:80%; top:30px} 
+100%{left:100%; top:150px}  
+}
+/* Standard syntax */
+@keyframes move {
+0%{left:0%;}
+20%{left:20%; top:150px}
+40%{left:40%; top:250px}
+60%{left:60%; top:180px}
+80%{left:80%; top:30px} 
+100%{left:100%; top:150px}   
+}
+
+
+</style>
+</head>
+
+<body>
+<div id="anim">
+ <div id="plane"><img src="plane.png" height="100px" width="100px"/></div>
+ <div id="new_plane"><img src="boom.png" height="100px" width="100px"/></div>
+ <div id="bird2" class="obstacle1"><img src="bird.gif" height="auto" width="75px"/></div>
+ <div id="bird1" class="obstacle2"><img src="bird.gif" height="auto" width="75px"/></div>
+ <div id="spaceship" class="enemy"><img src="spaceship.png" height="auto" width="150px"/></div>
+</div>
+
+<div>
+<img src="up.png" onclick="move_up('up')"  width="100px"/>
+<img src="down.png"  onclick="move_up('down') " width="100px"/>
+</div>
+
+
+
+<script>
+function move_up(str) {
+var step=50;
+switch(str){
+
+case "down":
+var x=document.getElementById('plane').offsetTop;
+if(x<300)
+	x=x+step;
+document.getElementById('plane').style.top=x+"px";
+break;
+
+case "up":
+var x=document.getElementById('plane').offsetTop;
+if(x>0)
+	x=x-step;
+document.getElementById('plane').style.top=x+"px";
+break;
+}
+}
+
+function myStartFunction() {
+    myVar = setInterval(collision, 200);
+}
+
+function collision()
+{
+
+      var x1 = document.getElementById('plane').offsetLeft;
+      var y1 = document.getElementById('plane').offsetTop;
+      var h1 = document.getElementById('plane').offsetHeight;
+      var w1 = document.getElementById('plane').offsetWidth;
+      var b1 = y1 + h1;
+      var r1 = x1 + w1;
+
+      var x2 = document.getElementById('bird1').offsetLeft;
+      var y2 = document.getElementById('bird1').offsetTop;
+      var h2 = document.getElementById('bird1').offsetHeight;
+      var w2 = document.getElementById('bird1').offsetWidth;
+      var b2 = y2 + h2;
+      var r2 = x2 + w2;
+
+      var x3 = document.getElementById('bird2').offsetLeft;
+      var y3 = document.getElementById('bird2').offsetTop;
+      var h3 = document.getElementById('bird2').offsetHeight;
+      var w3 = document.getElementById('bird2').offsetWidth;
+      var b3 = y3 + h3;
+      var r3 = x3 + w3;
+
+      var x4 = document.getElementById('spaceship').offsetLeft;
+      var y4 = document.getElementById('spaceship').offsetTop;
+      var h4 = document.getElementById('spaceship').offsetHeight;
+      var w4 = document.getElementById('spaceship').offsetWidth;
+      var b4 = y4 + h4;
+      var r4 = x4 + w4;
+
+      if ((!(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2))    || (!(b1 < y3 || y1 > b3 || r1 < x3 || x1 > r3))  || (!(b1 < y4 || y1 > b4 || r1 < x4 || x1 > r4)))
+{
+   d1 = document.getElementById('plane');
+   d2 = document.getElementById('new_plane');
+   d2.style.top=d1.offsetTop+"px";
+   if( d2.style.display == "none" )
+   {
+      d1.style.display = "none";
+      d2.style.display = "block";
+   }
+   else
+  {
+      d1.style.display = "none";
+      d2.style.display = "block";
+  }
+   	window.alert("GameOver");
+}
+}
+
+window.onload = myStartFunction;
+
+</script>
+
+</body>
+
+</html>
