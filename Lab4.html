@@ -4,6 +4,8 @@
 <style>
 
 #anim{
+    position:relative;
+    top:0px;
     width:auto;
     height:400px;
     background:url("bg.png") repeat-y;
@@ -15,7 +17,7 @@
 
 #plane{
    position:relative;
-   top:150px;
+   top:142px;
    left:50%;
    height:100px;
    width:100px;
@@ -36,7 +38,7 @@
    position:absolute;
    top:50px;
    left:-100px;
-   height:75px;
+   height:auto;
    width:75px;
   }
 
@@ -52,9 +54,9 @@
 
 #bird2{
    position:absolute;
-   top:270px;
-   left:-100px;
-   height:75px;
+   top:250px;
+   left:-300px;
+   height:auto;
    width:75px;
 }
 
@@ -71,8 +73,8 @@
    position:absolute;
    top:250px;
    left:-150px;
-   height:150px;
-   width:150px;
+   height:auto;
+   width:130px;
 }
 
 .enemy{
@@ -83,7 +85,7 @@
 
    -webkit-animation: move 5s linear infinite;
    -webkit-animation-delay: 12s;
-   -webkit-animation-direction:alternate;
+   -webkit-animation-direction:right;
 }
 
 /* Chrome, Safari, Opera */
@@ -121,7 +123,7 @@
 @keyframes move {
 0%{left:0%;}
 20%{left:20%; top:150px}
-40%{left:40%; top:250px}
+40%{left:40%; top:200px}
 60%{left:60%; top:180px}
 80%{left:80%; top:30px} 
 100%{left:100%; top:150px}   
@@ -137,7 +139,7 @@
  <div id="new_plane"><img src="boom.png" height="100px" width="100px"/></div>
  <div id="bird2" class="obstacle1"><img src="bird.gif" height="auto" width="75px"/></div>
  <div id="bird1" class="obstacle2"><img src="bird.gif" height="auto" width="75px"/></div>
- <div id="spaceship" class="enemy"><img src="spaceship.png" height="auto" width="150px"/></div>
+ <div id="spaceship" class="enemy"><img src="spaceship.png" height="auto" width="130px"/></div>
 </div>
 
 <div>
@@ -149,19 +151,19 @@
 
 <script>
 function move_up(str) {
-var step=50;
+var step=30;
 switch(str){
 
 case "down":
 var x=document.getElementById('plane').offsetTop;
-if(x<300)
+if(x<310)
 	x=x+step;
 document.getElementById('plane').style.top=x+"px";
 break;
 
 case "up":
 var x=document.getElementById('plane').offsetTop;
-if(x>0)
+if(x>=0)
 	x=x-step;
 document.getElementById('plane').style.top=x+"px";
 break;
